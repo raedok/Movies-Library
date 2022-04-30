@@ -1,12 +1,15 @@
 "use strict";
 const express = require("express");
+const cors = require("cors")
 const app = express();
-const port = 3000;
-const recipeData = require("./");
+app.use(cors());
+const PORT = 3000;
+const recipeData = require("./Movies_Data/data.json");
 
 app.get("/", homeHandler);
 app.get("/favorite", handleFirstRout);
 app.get("/recipes", recipesHandler);
+app.get("/*", errorHandler);
 
 function handleFirstRout(req, res) {
   res.send("Welcome to Favorite Page");
@@ -16,18 +19,15 @@ function homeHandler(req, res) {
   res.send("Hello World");
 }
 
-function receipesHandler(req, res) {
-  let result = [];
-  recipeData.data.forEach((element) => {
-    let newRecipe = new Recipe(
-      element.title,
-      element.poster_path,
-      element.overview
-    );
-    result.push(newRecipe);
-  });
-  console.log(result);
-  res.json(result);
+function recipesHandler(req, res) {
+  console.log(recipeData)
+  let newRecipe = new Recipe(
+    recipeData.title,
+    recipeData.poster_path,
+    recipeData.overview
+  )
+  res.json(newRecipe);
+  res.send("data is recived");
 }
 
 function Recipe(title, poster_path, overview) {
@@ -36,6 +36,12 @@ function Recipe(title, poster_path, overview) {
   this.overview = overview;
 }
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+function errorHandler(req,res) {
+res.status(404).send("This Rout Is Not Exist");
+}
+
+
+
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`);
 });
