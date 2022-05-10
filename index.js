@@ -8,18 +8,14 @@ const recipeData = require("./Movies_Data/data.json");
 
 app.get("/", homeHandler);
 app.get("/favorite", handleFirstRout);
-app.get("/recipes", recipesHandler);
 app.get("/*", errorHandler);
 
 function handleFirstRout(req, res) {
   res.send("Welcome to Favorite Page");
 }
 
-function homeHandler(req, res) {
-  res.send("Hello World");
-}
 
-function recipesHandler(req, res) {
+function homeHandler(req, res) {
   console.log(recipeData)
   let newRecipe = new Recipe(
     recipeData.title,
