@@ -17,6 +17,18 @@ this website will return the latest movies and will give you access to the trend
   - implement the functions handlers 
 - start the server. 
 
+## Tree
+Movies-Library
+   ├── Movie Data
+   |     └── data.json
+   ├── .eslintrc.json
+   ├── .env
+   ├── .gitignore
+   ├── package-lock.json
+   ├── package.json
+   ├── README.md
+   └── index.js
+
 ## Project Features
 
 <!-- What are the features included in you app -->
