@@ -30,5 +30,5 @@ Movies-Library
    └── index.js
 
 ## Project Features
-
-<!-- What are the features included in you app -->
+you can add a movie to the database 
+you can get all movies from the database
