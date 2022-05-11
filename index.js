@@ -40,6 +40,9 @@ app.get("/search", handelSearch);
 app.get("/collection", handelCollection);
 app.post("/addmovie", handleAddtion);
 app.get("/getmovies", handelGetMovies);
+app.put("/update/:id", handelUpdate); //req.query
+app.delete("/delete/:id", handelDelete); //params
+app.get("/getbyid", handelGetById); //params
 app.get("/*", errorHandler);
 
 function homeHandler(req, res) {
@@ -102,6 +105,33 @@ function handelCollection(req, res) {
       console.log(err);
     });
 }
+function handelUpdate(req, res) {
+  const { original_title, release_date, poster_path, overview } = req.body;
+  let { id } = req.params;
+  let sql = `UPDATE movie SET original_title=$1, release_date=$2, poster_path=$3, overview=$4 WHERE id = $5 RETURNING *;`;
+  let values = [original_title, release_date, poster_path, overview, id];
+  client
+    .query(sql, values)
+    .then((data) => {
+      return res.status(201).json(data.rows);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+function handelDelete(req, res) {
+  let { id } = req.params;
+  let sql = `DELETE FROM movie WHERE id=$1;`;
+  let values = [id];
+  client
+    .query(sql, values)
+    .then((data) => {
+      return res.status(201).json(data.rows);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
 
 function handleAddtion(req, res) {
   console.log(req.body);
@@ -125,6 +155,17 @@ function handelGetMovies(req, res) {
     .query(sql)
     .then((data) => {
       return res.status(200).json(data.rows);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}
+
+function handelGetById(req, res) {
+  client
+    .query("SELECT * from movie WHERE id=$1;", [req.query.id])
+    .then((data) => {
+      res.status(200).json(data.rows);
     })
     .catch((err) => {
       console.log(err);
