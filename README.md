@@ -32,3 +32,4 @@ Movies-Library
 ## Project Features
 you can add a movie to the database 
 you can get all movies from the database
+you can update and delet and get request for spesific movie from the databace by id
